@@ -38,7 +38,13 @@ App.Models.User = Backbone.Model.extend({
 
 // Collections
 App.Collections.Users = Backbone.Collection.extend({
-	url: '/api/users'
+	url: '/api/users',
+	initialize: function() {
+		this.on('change', onChange);
+	},
+	onChange: function(model) {
+		console.info('Model in App.Collections.Users has changed', model);
+	}
 });
 
 // View for the app container
