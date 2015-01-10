@@ -4,74 +4,21 @@ var App = {
 	Collections: {},
 	Views: {},
 
-	init: function() {
-		this.appView = new this.Views.AppView({ el: '#app' });
-		this.users = new this.Collections.Users();
-	},
-	start: function() {
-		Backbone.history.start();
-		var usersView = new this.Views.UsersView({ collection: this.users });
-		this.appView.show(usersView);
-	}
+	init: function() {},
+	start: function() {}
 };
 
 // Models
-App.Models.User = Backbone.Model.extend({
-	url: '/api/users',
-	defaults: {
-		firstName: 'Josh',
-		lastName: 'Bedo'
-	},
-
-	initialize: function() {
-		this.on('invalid', function(m) {
-			alert(m.validationError);
-		});
-	},
-
-	validate: function(attrs, opts) {
-		if (!(attrs.email && attrs.userName)) {
-			return "Need an email AND a username";
-		}
-	}
-});
+App.Models.User = Backbone.Model.extend({});
 
 // Collections
-App.Collections.Users = Backbone.Collection.extend({
-	url: '/api/users'
-});
+App.Collections.Users = Backbone.Collection.extend({});
 
 // View for the app container
-App.Views.AppView = Backbone.View.extend({
-	show: function(view) {
-		this.$el.append(view.el);
-	}
-});
+App.Views.AppView = Backbone.View.extend({});
 
 // Users CollectionView
-App.Views.UsersView = Backbone.View.extend({
-	tagName: 'ul',
-	initialize: function() {
-		this.collection.on('sync', this.render, this);
-	},
-	render: function() {
-		var el = this.$el;
-		el.empty();
-
-		this.collection.each(function(item) {
-			var userView = new UserView({ model: item });
-			var rendered = userView.render();
-			el.append(rendered);
-		});
-		return el;
-	}
-});
+App.Views.UsersView = Backbone.View.extend({});
 
 // Users ItemView
-App.Views.UserView = Backbone.View.extend({
-	tagName: 'li',
-	render: function() {
-		this.$el.append(this.model.get('email'));
-		return this.$el;
-	}
-});
+App.Views.UserView = Backbone.View.extend({});
