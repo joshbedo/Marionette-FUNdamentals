@@ -1,5 +1,7 @@
 // App namespace
-var App = {
+
+var App = new Backbone.Marionette.Application.extend({
+
 	Models: {},
 	Collections: {},
 	Views: {},
@@ -10,10 +12,11 @@ var App = {
 	},
 	start: function() {
 		Backbone.history.start();
-		var usersView = new this.Views.UsersView({ collection: this.users });
+		var usersView = new this.Views.UsersView({collection: this.users});
 		this.appView.show(usersView);
 	}
-};
+
+});
 
 // Models
 App.Models.User = Backbone.Model.extend({
@@ -25,7 +28,7 @@ App.Models.User = Backbone.Model.extend({
 
 	initialize: function() {
 		this.on('invalid', function(m) {
-			alert(m.validationError);
+			console.error(m.validationError);
 		});
 	},
 
@@ -33,6 +36,10 @@ App.Models.User = Backbone.Model.extend({
 		if (!(attrs.email && attrs.userName)) {
 			return "Need an email AND a username";
 		}
+	},
+
+	fullName: function() {
+		return this.get('firstName') + ' ' + this.get('lastName');
 	}
 });
 
@@ -75,3 +82,12 @@ App.Views.UserView = Backbone.View.extend({
 		return this.$el;
 	}
 });
+
+//App.addRegions({
+//	main: "#main",
+//	sub: "#sub"
+//});
+//
+//App.on('my-event',callback); // Handle Event
+//App.trigger('my-event'); // Fire event
+//
